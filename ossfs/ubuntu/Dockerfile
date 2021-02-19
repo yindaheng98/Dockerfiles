@@ -12,7 +12,7 @@ ENV BucketName=your-bucket-name
 ENV AccessKeyId=your-access-key-id
 ENV AccessKeySecret=your-access-key-secret
 ENV EndPoint=your-end-point
-ENV MountDir=your-mount-dir
+ENV MountPoint=your-mount-dir
 COPY ./mount.sh /mount.sh
 
 ENTRYPOINT [ "/mount.sh" ]
