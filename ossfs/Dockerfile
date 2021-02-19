@@ -15,4 +15,4 @@ ENV EndPoint=your-end-point
 ENV MountDir=your-mount-dir
 COPY ./mount.sh mount.sh
 
-CMD [ "mount.sh" ]
+ENTRYPOINT [ "mount.sh" ]
