@@ -13,6 +13,6 @@ ENV AccessKeyId=your-access-key-id
 ENV AccessKeySecret=your-access-key-secret
 ENV EndPoint=your-end-point
 ENV MountDir=your-mount-dir
-COPY ./mount.sh mount.sh
+COPY ./mount.sh /mount.sh
 
-ENTRYPOINT [ "mount.sh" ]
+ENTRYPOINT [ "/mount.sh" ]
