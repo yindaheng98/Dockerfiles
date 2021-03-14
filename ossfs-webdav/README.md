@@ -13,6 +13,35 @@ docker run --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor=unconf
  --env AccessKeySecret=your-access-key-secret \
  --env EndPoint=your.end.point \
  --env MountPoint=/var/lib/dav \
- --env <webdav相关环境变量见yindaheng98/webdav>\
+ --env AUTH_TYPE=Digest \
+ --env USERNAME=your-webdav-username \
+ --env PASSWORD=your-webdav-password \
+ --env OWNER_USER=www-data \
+ --env OWNER_GROUP=www-data \
+ --env <更多webdav相关环境变量见yindaheng98/webdav> \
  yindaheng98/ossfs:alpine
+```
+
+```yml
+version: "3"
+services:
+  ossfs:
+    image: yindaheng98/ossfs-webdav
+    restart: always
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse
+    security_opt:
+      - apparmor=unconfined
+    environment:
+      BucketName: your-bucket-name
+      AccessKeyId: your-access-key-id
+      AccessKeySecret: your-access-key-secret
+      EndPoint: your.end.point
+      AUTH_TYPE: Digest
+      USERNAME: your-webdav-username
+      PASSWORD: your-webdav-password
+      OWNER_USER: www-data
+      OWNER_GROUP: www-data
 ```
