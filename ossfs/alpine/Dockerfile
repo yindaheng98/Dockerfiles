@@ -11,13 +11,15 @@ FROM alpine:3
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh && \
     apk --update add fuse curl libxml2 openssl libstdc++ libgcc && \
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/* 
 COPY --from=builder /usr/local/bin/ossfs /usr/local/bin/ossfs
 ENV BucketName=your-bucket-name
 ENV AccessKeyId=your-access-key-id
 ENV AccessKeySecret=your-access-key-secret
 ENV EndPoint=your-end-point
-ENV MountPoint=/mnt/ossfs
-COPY ./mount.sh /mount.sh
+ENV MountPoint=/var/lib/dav/data
+ENV OWNER_USER=root
+ENV OWNER_GROUP=root
 
-ENTRYPOINT [ "/mount.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "ls", "${MountPoint}" ]
