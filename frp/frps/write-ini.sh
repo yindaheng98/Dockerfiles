@@ -15,3 +15,4 @@ EOF
 
 echo "dashboard_user = ${dashboard_user}" >> /frps.ini
 echo "dashboard_pwd = ${dashboard_pwd}" >> /frps.ini
+exec "$@"

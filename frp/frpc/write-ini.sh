@@ -12,3 +12,4 @@ echo "type = ${type}" >> /frpc.ini
 echo "local_ip = ${local_ip}" >> /frpc.ini
 echo "local_port = ${local_port}" >> /frpc.ini
 echo "remote_port = ${remote_port}" >> /frpc.ini
+exec "$@"

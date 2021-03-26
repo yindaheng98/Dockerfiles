@@ -5,6 +5,7 @@ RUN wget $FRP_URL -O /frp.tar.gz && tar -zxvf /frp.tar.gz -C / --strip-component
 FROM alpine
 COPY --from=downloader /frpc /frpc
 COPY ./write-ini.sh /write-ini.sh
+RUN chmod a+x /write-ini.sh
 
 ENV server_addr 192.168.56.1
 ENV server_port 7000

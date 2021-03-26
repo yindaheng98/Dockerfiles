@@ -5,9 +5,10 @@ RUN wget $FRP_URL -O /frp.tar.gz && tar -zxvf /frp.tar.gz -C / --strip-component
 FROM alpine
 COPY --from=downloader /frps /frps
 COPY ./write-ini.sh /write-ini.sh
+RUN chmod a+x /write-ini.sh
 
 ENV dashboard_user admin
-ENV dashboard_user administrator
+ENV dashboard_pwd administrator
 
 
 
