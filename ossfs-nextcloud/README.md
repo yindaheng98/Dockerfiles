@@ -1,6 +1,6 @@
-# ossfs-webdav
+# ossfs-nextcloud
 
-这是一个用ossfs挂载Aliyun OSS到本地目录并转为Webdav的镜像。基于`alpine`。
+在nextcloud容器中用ossfs挂载Aliyun OSS到`/var/www/html`。基于`nextcloud:20`。
 
 使用的ossfs版本：[https://github.com/aliyun/ossfs/tree/v1.80.6](https://github.com/aliyun/ossfs/tree/v1.80.6)
 
@@ -12,21 +12,17 @@ docker run --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor=unconf
  --env AccessKeyId=your-access-key-id \
  --env AccessKeySecret=your-access-key-secret \
  --env EndPoint=your.end.point \
- --env MountPoint=/var/lib/dav \
- --env AUTH_TYPE=Digest \
- --env USERNAME=your-webdav-username \
- --env PASSWORD=your-webdav-password \
+ --env MountPoint=/var/www/html \
  --env OWNER_USER=www-data \
  --env OWNER_GROUP=www-data \
- --env <更多webdav相关环境变量见yindaheng98/webdav> \
- yindaheng98/ossfs-webdav
+ yindaheng98/ossfs-nextcloud
 ```
 
 ```yml
 version: "3"
 services:
   ossfs:
-    image: yindaheng98/ossfs-webdav
+    image: yindaheng98/ossfs-nextcloud
     restart: always
     cap_add:
       - SYS_ADMIN
@@ -39,9 +35,7 @@ services:
       AccessKeyId: your-access-key-id
       AccessKeySecret: your-access-key-secret
       EndPoint: your.end.point
-      AUTH_TYPE: Digest
-      USERNAME: your-webdav-username
-      PASSWORD: your-webdav-password
+      MountPoint: /var/www/html
       OWNER_USER: www-data
       OWNER_GROUP: www-data
 ```
