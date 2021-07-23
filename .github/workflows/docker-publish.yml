@@ -17,6 +17,10 @@ on:
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
+  BUILDX: |
+    docker buildx build \
+    --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+    --output "type=image,push=true"
 
 jobs:
   build:
@@ -42,6 +46,17 @@ jobs:
         with:
           buildx-version: latest
 
+      - name: Build archivemount (with push)
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./archivemount
+          DOCKER_IMG_NAME: archivemount
+          DOCKER_TAG_NAME: latest
+        run: |
+          ${{ env.BUILDX }} \
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
+
       - name: Build cron (with push)
         env:
           DOCKER_USERNAME: ${{ github.actor }}
@@ -49,9 +64,7 @@ jobs:
           DOCKER_IMG_NAME: cron
           DOCKER_TAG_NAME: latest
         run: |
-          docker buildx build \
-          --platform=linux/amd64,linux/arm/v7,linux/arm64 \
-          --output "type=image,push=true" \
+          ${{ env.BUILDX }} \
           --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
           --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
 
@@ -62,9 +75,7 @@ jobs:
           DOCKER_IMG_NAME: frp
           DOCKER_TAG_NAME: server
         run: |
-          docker buildx build \
-          --platform=linux/amd64,linux/arm/v7,linux/arm64 \
-          --output "type=image,push=true" \
+          ${{ env.BUILDX }} \
           --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
           --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
       
@@ -75,8 +86,6 @@ jobs:
           DOCKER_IMG_NAME: frp
           DOCKER_TAG_NAME: client
         run: |
-          docker buildx build \
-          --platform=linux/amd64,linux/arm/v7,linux/arm64 \
-          --output "type=image,push=true" \
+          ${{ env.BUILDX }} \
           --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
           --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}

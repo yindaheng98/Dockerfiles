@@ -1,6 +1,4 @@
 FROM alpine AS builder
-ENV REPO=https://github.com/fatedier/frp
-ARG VERSION=v0.34.3
 RUN apk add --no-cache --no-cache \
     autoconf automake g++ make libarchive-dev fuse-dev git && \
     git clone https://github.com/cybernoid/archivemount && \
