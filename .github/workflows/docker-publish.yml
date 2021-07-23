@@ -45,11 +45,12 @@ jobs:
       - name: Build cron (with push)
         env:
           DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./cron
           DOCKER_IMG_NAME: cron
           DOCKER_TAG_NAME: latest
         run: |
           docker buildx build \
           --platform=linux/amd64,linux/arm/v7,linux/arm64 \
           --output "type=image,push=true" \
-          --file ./${DOCKER_IMG_NAME}/Dockerfile ./${DOCKER_IMG_NAME} \
-          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:latest
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
