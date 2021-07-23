@@ -1,9 +1,11 @@
-FROM busybox AS downloader
-ENV FRP_URL=https://github.com/fatedier/frp/releases/download/v0.34.3/frp_0.34.3_linux_amd64.tar.gz
-RUN wget $FRP_URL -O /frp.tar.gz && tar -zxvf /frp.tar.gz -C / --strip-components=1
+FROM golang:alpine AS builder
+ENV REPO=https://github.com/fatedier/frp
+ARG VERSION=v0.34.3
+RUN apk add --no-cache git make && git clone -b $VERSION $REPO && \
+    cd frp && make frpc
 
 FROM alpine
-COPY --from=downloader /frpc /frpc
+COPY --from=builder /go/frp/bin/frpc /frpc
 COPY ./frpc.ini /frpc.ini
 
 CMD [ "/frpc", "-c", "/frpc.ini" ]

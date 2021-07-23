@@ -54,3 +54,29 @@ jobs:
           --output "type=image,push=true" \
           --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
           --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
+
+      - name: Build frps (with push)
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./frp/frps
+          DOCKER_IMG_NAME: frp
+          DOCKER_TAG_NAME: server
+        run: |
+          docker buildx build \
+          --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+          --output "type=image,push=true" \
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
+      
+      - name: Build frpc (with push)
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./frp/frpc
+          DOCKER_IMG_NAME: frp
+          DOCKER_TAG_NAME: client
+        run: |
+          docker buildx build \
+          --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+          --output "type=image,push=true" \
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
