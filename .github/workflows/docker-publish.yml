@@ -46,16 +46,16 @@ jobs:
         with:
           buildx-version: latest
 
-      - name: Build ossutil (with push)
-        env:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKERFILE_DIR: ./ossutil
-          DOCKER_IMG_NAME: ossutil
-          DOCKER_TAG_NAME: latest
-        run: |
-          ${{ env.BUILDX }} \
-          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
-          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
+#      - name: Build ossutil (with push)
+#        env:
+#          DOCKER_USERNAME: ${{ github.actor }}
+#          DOCKERFILE_DIR: ./ossutil
+#          DOCKER_IMG_NAME: ossutil
+#          DOCKER_TAG_NAME: latest
+#        run: |
+#          ${{ env.BUILDX }} \
+#          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+#          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
 
       - name: Build archivemount (with push)
         env:
