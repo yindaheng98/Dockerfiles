@@ -5,11 +5,11 @@
     "vnext": [
       {
         "address": "{{address}}",
-        "port": "{{serverPort}}",
+        "port": {{serverPort}},
         "users": [
           {
             "id": "{{uuid}}",
-            "alterId": "{{aid}}",
+            "alterId": {{aid}},
             "security": "{{security}}"
           }
         ]
@@ -25,8 +25,8 @@
     "httpSettings": {{http}},
     "quicSettings": {{quic}},
     "mux": {
-        "enabled": "{{mux}}",
-        "concurrency": "{{concurrency}}"
+        "enabled": {{mux}},
+        "concurrency": {{concurrency}}
     }
   }
 }
