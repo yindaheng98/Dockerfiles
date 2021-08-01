@@ -57,6 +57,17 @@ jobs:
 #          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
 #          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
 
+      - name: Build v2gen (with push)
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./v2gen
+          DOCKER_IMG_NAME: v2gen
+          DOCKER_TAG_NAME: latest
+        run: |
+          ${{ env.BUILDX }} \
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
+
       - name: Build archivemount (with push)
         env:
           DOCKER_USERNAME: ${{ github.actor }}
