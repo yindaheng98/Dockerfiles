@@ -1,0 +1,32 @@
+{
+  "tag": "{{address}}",
+  "protocol": "vmess",
+  "settings": {
+    "vnext": [
+      {
+        "address": "{{address}}",
+        "port": "{{serverPort}}",
+        "users": [
+          {
+            "id": "{{uuid}}",
+            "alterId": "{{aid}}",
+            "security": "{{security}}"
+          }
+        ]
+      }
+    ]
+  },
+  "streamSettings": {
+    "network": "{{network}}",
+    "security": "{{streamSecurity}}",
+    "tlsSettings": {{tls}},
+    "kcpSettings": {{kcp}},
+    "wsSettings": {{ws}},
+    "httpSettings": {{http}},
+    "quicSettings": {{quic}},
+    "mux": {
+        "enabled": "{{mux}}",
+        "concurrency": "{{concurrency}}"
+    }
+  }
+}
