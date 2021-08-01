@@ -68,6 +68,17 @@ jobs:
           --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
           --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
 
+      - name: Build v2subscribe (with push)
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./v2subscribe
+          DOCKER_IMG_NAME: v2subscribe
+          DOCKER_TAG_NAME: latest
+        run: |
+          ${{ env.BUILDX }} \
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
+
       - name: Build archivemount (with push)
         env:
           DOCKER_USERNAME: ${{ github.actor }}
