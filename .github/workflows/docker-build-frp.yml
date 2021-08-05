@@ -1,0 +1,69 @@
+name: Docker
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+on:
+  schedule:
+    - cron: "00 20 * * *"
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: docker.io
+  BUILDX: |
+    docker buildx build \
+    --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+    --output "type=image,push=true" \
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Login against a Docker registry except on PR
+      # https://github.com/docker/login-action
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+
+      - name: Build frps (with push)
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./frp/frps
+          DOCKER_IMG_NAME: frp
+          DOCKER_TAG_NAME: server
+        run: |
+          ${{ env.BUILDX }} \
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
+      
+      - name: Build frpc (with push)
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKERFILE_DIR: ./frp/frpc
+          DOCKER_IMG_NAME: frp
+          DOCKER_TAG_NAME: client
+        run: |
+          ${{ env.BUILDX }} \
+          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
+          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}

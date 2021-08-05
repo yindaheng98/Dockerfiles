@@ -57,22 +57,11 @@ jobs:
 #          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
 #          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
 
-      - name: Build v2gen (with push)
+      - name: Build pishrink (with push)
         env:
           DOCKER_USERNAME: ${{ github.actor }}
-          DOCKERFILE_DIR: ./v2gen
-          DOCKER_IMG_NAME: v2gen
-          DOCKER_TAG_NAME: latest
-        run: |
-          ${{ env.BUILDX }} \
-          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
-          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
-
-      - name: Build v2subscribe (with push)
-        env:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKERFILE_DIR: ./v2subscribe
-          DOCKER_IMG_NAME: v2subscribe
+          DOCKERFILE_DIR: ./pishrink
+          DOCKER_IMG_NAME: pishrink
           DOCKER_TAG_NAME: latest
         run: |
           ${{ env.BUILDX }} \
@@ -96,28 +85,6 @@ jobs:
           DOCKERFILE_DIR: ./cron
           DOCKER_IMG_NAME: cron
           DOCKER_TAG_NAME: latest
-        run: |
-          ${{ env.BUILDX }} \
-          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
-          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
-
-      - name: Build frps (with push)
-        env:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKERFILE_DIR: ./frp/frps
-          DOCKER_IMG_NAME: frp
-          DOCKER_TAG_NAME: server
-        run: |
-          ${{ env.BUILDX }} \
-          --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
-          --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
-      
-      - name: Build frpc (with push)
-        env:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKERFILE_DIR: ./frp/frpc
-          DOCKER_IMG_NAME: frp
-          DOCKER_TAG_NAME: client
         run: |
           ${{ env.BUILDX }} \
           --file ${DOCKERFILE_DIR}/Dockerfile ${DOCKERFILE_DIR} \
