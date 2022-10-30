@@ -1,5 +1,4 @@
 FROM alpine
-COPY qemu-aarch64-static /usr/bin/
 
 # Install samba
 RUN apk --no-cache --no-progress upgrade && \
