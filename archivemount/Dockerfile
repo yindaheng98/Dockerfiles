@@ -5,5 +5,5 @@ RUN apk add --no-cache \
     cd fuse-archive && make
 
 FROM alpine
-RUN apk add --no-cache libarchive fuse libstdc++ libgcc
+RUN apk add --no-cache libarchive fuse libstdc++
 COPY --from=builder fuse-archive/out/fuse-archive /usr/local/bin/archivemount
