@@ -1,6 +1,6 @@
 FROM alpine AS builder
 RUN apk add --no-cache \
-    autoconf automake build-base make libarchive-dev fuse-dev git && \
+    build-base make libarchive-dev fuse-dev git && \
     git clone https://github.com/google/fuse-archive && \
     cd fuse-archive && make
 
